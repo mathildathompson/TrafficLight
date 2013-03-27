@@ -4,7 +4,7 @@ module TL
   Stop = "#FF0000"
 end
 
-  class TrafficLight  
+class TrafficLight  
   include Enumerable
 
   def each
@@ -15,7 +15,8 @@ end
   end
 end
 
-class Bulb < Shoes::Shape
+class Bulb < Shoes::Shape 
+  include TL
   attr_accessor :stack
   attr_accessor :left
   attr_accessor :top
@@ -47,7 +48,6 @@ end
 class GoBulb < Bulb
   def bulb_colour
     TL::Go
-    # "#00FF30"
   end
 end
 
@@ -70,11 +70,15 @@ Shoes.app :title => "My Amazing Traffic Light", :width => 150, :height => 250 do
   stroke black    
   
   @traffic_light = TrafficLight.new
-  @top = StopBulb.new self, 50, 40, true     
-  @middle = WaitBulb.new self, 50, 100, true
-  @bottom = GoBulb.new self, 50, 160, true
+  @top = Bulb.new self, 50, 40, true    
+  @middle = Bulb.new self, 50, 100, true
+  @bottom = Bulb.new self, 50, 160, true
   
   click do
+   @top = StopBulb.new self, 50, 40, true    
+  @middle = WaitBulb.new self, 50, 100, true
+  @bottom = GoBulb.new self, 50, 160, true
+
     
   end
 end
